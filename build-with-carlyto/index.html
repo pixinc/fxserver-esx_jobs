@@ -8,15 +8,15 @@
 <style>
   /* ---------- Tokens ---------- */
   :root {
-    --paper: #EBEAE4;
-    --paper-raised: #F2F1EC;
-    --ink: #1A2129;
-    --muted: #5A6270;
-    --line: #C6C6BB;
-    --line-soft: #D8D8CE;
+    --paper: #FFFFFF;
+    --paper-raised: #F7F7F5;
+    --ink: #14171C;
+    --muted: #5C6470;
+    --line: #D8D8D3;
+    --line-soft: #E9E9E5;
     --accent: #B26F1D;
     --accent-strong: #8F5714;
-    --grid: rgba(26, 33, 41, 0.055);
+    --grid: rgba(20, 23, 28, 0.05);
 
     --serif: "Charter", "Bitstream Charter", "Iowan Old Style", Georgia, "Times New Roman", serif;
     --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
@@ -24,41 +24,7 @@
 
     --col: 44rem;
     --pad: clamp(1.25rem, 5vw, 2.5rem);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --paper: #10161D;
-      --paper-raised: #161E27;
-      --ink: #E8E6DF;
-      --muted: #8B94A0;
-      --line: #2B3540;
-      --line-soft: #202932;
-      --accent: #E89B2E;
-      --accent-strong: #F2B457;
-      --grid: rgba(232, 230, 223, 0.045);
-    }
-  }
-  :root[data-theme="light"] {
-    --paper: #EBEAE4;
-    --paper-raised: #F2F1EC;
-    --ink: #1A2129;
-    --muted: #5A6270;
-    --line: #C6C6BB;
-    --line-soft: #D8D8CE;
-    --accent: #B26F1D;
-    --accent-strong: #8F5714;
-    --grid: rgba(26, 33, 41, 0.055);
-  }
-  :root[data-theme="dark"] {
-    --paper: #10161D;
-    --paper-raised: #161E27;
-    --ink: #E8E6DF;
-    --muted: #8B94A0;
-    --line: #2B3540;
-    --line-soft: #202932;
-    --accent: #E89B2E;
-    --accent-strong: #F2B457;
-    --grid: rgba(232, 230, 223, 0.045);
+    color-scheme: light;
   }
 
   /* ---------- Base ---------- */
