@@ -391,6 +391,52 @@
     gap: 0.75rem;
   }
 
+  /* ---------- Energy pass ---------- */
+  .rise.d5 { animation-delay: 0.62s; }
+  h1 { font-size: clamp(2.6rem, 7.6vw, 5.2rem); }
+  h1 em { background: linear-gradient(transparent 68%, rgba(178, 111, 29, 0.16) 68%); }
+  .progress {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 2px;
+    width: 0;
+    background: var(--accent);
+  }
+  .nav-cta { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .nav-cta:hover { background: var(--accent-strong); border-color: var(--accent-strong); color: #fff; }
+  .hero-stats {
+    margin-top: 2.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 2.75rem;
+  }
+  .hero-stats b {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--accent-strong);
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-stats .mono { font-size: 0.66rem; }
+  .ledger li { transition: background 0.2s ease, transform 0.2s ease; }
+  .ledger li:hover { background: var(--paper-raised); transform: translateX(5px); }
+
+  /* Join — the one loud moment of the page */
+  .join { background: #A9691C; border-top: 0; }
+  .join::before {
+    background:
+      repeating-linear-gradient(to right, rgba(255, 255, 255, 0.14) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.14) 0 1px, transparent 1px 56px);
+  }
+  .join h2, .join .body p, .join .sign { color: #fff; }
+  .join .mono { color: rgba(255, 255, 255, 0.8); }
+  .join ::selection { background: #14171C; color: #fff; }
+  .join .btn-primary { background: #14171C; border-color: #14171C; color: #fff; }
+  .join .btn-primary:hover { background: #000; border-color: #000; color: #fff; }
+  .join .btn-ghost { color: #fff; border-color: rgba(255, 255, 255, 0.55); }
+  .join .btn-ghost:hover { border-color: #fff; color: #fff; }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .rise, .reveal { animation: none; transition: none; opacity: 1; transform: none; }
@@ -404,6 +450,7 @@
     <a class="wordmark" href="#top">Build <b>w/</b> Carlyto</a>
     <a class="nav-cta" href="#join">Join from day one</a>
   </nav>
+  <div class="progress" aria-hidden="true"></div>
 </header>
 
 <main id="top">
@@ -422,6 +469,15 @@
         <span>Every lesson will be shared.</span>
       </div>
       <p class="hero-invite rise d4">This project is an invitation to join that journey from day one.</p>
+      <div class="cta-row rise d5">
+        <a class="btn btn-primary" href="#join">Join from day one</a>
+        <span class="mono">Founding collection — coming soon</span>
+      </div>
+      <div class="hero-stats rise d5" role="group" aria-label="Key numbers">
+        <div><b data-count="16" data-prefix="$" data-suffix="B">$16B</b><span class="mono">Market GDP</span></div>
+        <div><b data-count="500000" data-suffix="+" data-locale="1">500,000+</b><span class="mono">Consumers</span></div>
+        <div><b data-count="40" data-prefix="+" data-suffix="%">+40%</b><span class="mono">Revenue, last venture</span></div>
+      </div>
     </div>
   </section>
 
@@ -473,11 +529,11 @@
       </div>
       <div class="stats" role="group" aria-label="The market in two numbers">
         <div class="stat">
-          <div class="num">$16B</div>
+          <div class="num" data-count="16" data-prefix="$" data-suffix="B">$16B</div>
           <span class="lbl mono">Annual GDP of the target zone</span>
         </div>
         <div class="stat">
-          <div class="num">500,000+</div>
+          <div class="num" data-count="500000" data-suffix="+" data-locale="1">500,000+</div>
           <span class="lbl mono">Citizens &amp; consumers</span>
         </div>
       </div>
@@ -667,20 +723,57 @@
 <script>
   (function () {
     var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    var bar = document.querySelector(".progress");
+    if (bar) {
+      var onScroll = function () {
+        var h = document.documentElement;
+        var max = h.scrollHeight - h.clientHeight;
+        bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + "%";
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+
     var sections = document.querySelectorAll(".reveal");
     if (reduced || !("IntersectionObserver" in window)) {
       sections.forEach(function (el) { el.classList.add("in"); });
-      return;
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: "0px 0px -8% 0px" });
+      sections.forEach(function (el) { io.observe(el); });
     }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in");
-          io.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: "0px 0px -8% 0px" });
-    sections.forEach(function (el) { io.observe(el); });
+
+    if (!reduced && "IntersectionObserver" in window) {
+      var fmt = function (el, v) {
+        var t = Math.round(v);
+        var str = el.dataset.locale ? t.toLocaleString("en-US") : String(t);
+        el.textContent = (el.dataset.prefix || "") + str + (el.dataset.suffix || "");
+      };
+      var cio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          cio.unobserve(entry.target);
+          var el = entry.target;
+          var end = parseFloat(el.dataset.count);
+          var t0 = null;
+          var step = function (ts) {
+            if (!t0) t0 = ts;
+            var p = Math.min((ts - t0) / 1200, 1);
+            fmt(el, end * (1 - Math.pow(1 - p, 3)));
+            if (p < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        });
+      }, { threshold: 0.4 });
+      document.querySelectorAll("[data-count]").forEach(function (el) { cio.observe(el); });
+    }
   })();
 </script>
 
