@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build with Carlyto — Don't invest in a company. Build with the entrepreneur.</title>
+<meta name="description" content="A founder-led NFT membership. Follow the complete entrepreneurial journey — companies launched, acquisitions, mistakes, victories — documented publicly, from day one.">
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    --paper: #EBEAE4;
+    --paper-raised: #F2F1EC;
+    --ink: #1A2129;
+    --muted: #5A6270;
+    --line: #C6C6BB;
+    --line-soft: #D8D8CE;
+    --accent: #B26F1D;
+    --accent-strong: #8F5714;
+    --grid: rgba(26, 33, 41, 0.055);
+
+    --serif: "Charter", "Bitstream Charter", "Iowan Old Style", Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    --col: 44rem;
+    --pad: clamp(1.25rem, 5vw, 2.5rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #10161D;
+      --paper-raised: #161E27;
+      --ink: #E8E6DF;
+      --muted: #8B94A0;
+      --line: #2B3540;
+      --line-soft: #202932;
+      --accent: #E89B2E;
+      --accent-strong: #F2B457;
+      --grid: rgba(232, 230, 223, 0.045);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #EBEAE4;
+    --paper-raised: #F2F1EC;
+    --ink: #1A2129;
+    --muted: #5A6270;
+    --line: #C6C6BB;
+    --line-soft: #D8D8CE;
+    --accent: #B26F1D;
+    --accent-strong: #8F5714;
+    --grid: rgba(26, 33, 41, 0.055);
+  }
+  :root[data-theme="dark"] {
+    --paper: #10161D;
+    --paper-raised: #161E27;
+    --ink: #E8E6DF;
+    --muted: #8B94A0;
+    --line: #2B3540;
+    --line-soft: #202932;
+    --accent: #E89B2E;
+    --accent-strong: #F2B457;
+    --grid: rgba(232, 230, 223, 0.045);
+  }
+
+  /* ---------- Base ---------- */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: var(--paper); }
+
+  a { color: var(--accent-strong); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .col {
+    max-width: var(--col);
+    margin-inline: auto;
+    padding-inline: var(--pad);
+  }
+
+  /* ---------- Header ---------- */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .nav {
+    max-width: var(--col);
+    margin-inline: auto;
+    padding: 0.85rem var(--pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .wordmark {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .wordmark b { color: var(--accent); font-weight: 700; }
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    transition: border-color 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .nav-cta:hover { border-color: var(--accent); color: var(--accent-strong); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    padding: clamp(5rem, 14vh, 9rem) 0 clamp(4rem, 10vh, 7rem);
+    border-bottom: 1px solid var(--line-soft);
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 56px);
+    mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+    pointer-events: none;
+  }
+  .hero .col { position: relative; }
+  .hero-eyebrow {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2.25rem;
+  }
+  .hero-eyebrow::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+    align-self: center;
+  }
+  h1 {
+    font-size: clamp(2.5rem, 7.2vw, 4.6rem);
+    line-height: 1.06;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    max-width: 16ch;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--accent-strong);
+  }
+  .hero-intro {
+    margin-top: 2.5rem;
+    max-width: 34rem;
+    display: grid;
+    gap: 1rem;
+  }
+  .hero-intro .lede { font-size: 1.2rem; }
+  .hero-creed {
+    margin-top: 2.25rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    display: grid;
+    gap: 0.3rem;
+  }
+  .hero-creed span::before { content: "— "; color: var(--accent); }
+  .hero-invite { margin-top: 2.25rem; max-width: 34rem; }
+
+  /* load-in sequence */
+  .rise { opacity: 0; transform: translateY(14px); animation: rise 0.7s ease-out forwards; }
+  .rise.d1 { animation-delay: 0.08s; }
+  .rise.d2 { animation-delay: 0.2s; }
+  .rise.d3 { animation-delay: 0.34s; }
+  .rise.d4 { animation-delay: 0.48s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ---------- Entries (sections) ---------- */
+  section.entry {
+    padding: clamp(3.5rem, 9vh, 5.5rem) 0 0;
+  }
+  .entry-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .entry-head .no { color: var(--accent); }
+  .entry-head::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  h2 {
+    font-size: clamp(1.7rem, 4vw, 2.3rem);
+    line-height: 1.15;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin-bottom: 1.25rem;
+  }
+  .entry .body { display: grid; gap: 1rem; }
+  .entry .body p { max-width: 62ch; }
+  .standfirst { font-size: 1.15rem; }
+  .quiet { color: var(--muted); }
+
+  /* scroll reveal */
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- Ledger lists ---------- */
+  .ledger {
+    list-style: none;
+    margin-top: 1.75rem;
+    border-top: 1px solid var(--line);
+  }
+  .ledger li {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .ledger .ref {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .ledger .what { font-size: 1rem; }
+  .ledger .what small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .ledger.timeline li { grid-template-columns: 6.5rem 1fr; }
+  .ledger .what strong { color: var(--accent-strong); font-weight: 600; }
+  .ledger-note {
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  /* ---------- Portrait ---------- */
+  .portrait { margin-top: 1.75rem; max-width: 14rem; }
+  .portrait .frame {
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--line);
+    background:
+      repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 28px),
+      var(--paper-raised);
+    display: grid;
+    place-items: center;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .portrait img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .portrait figcaption { margin-top: 0.6rem; }
+
+  /* ---------- Stats ---------- */
+  .stats {
+    margin-top: 1.75rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .stat { padding: 1.25rem 1.5rem 1.25rem 0; }
+  .stat + .stat { border-left: 1px solid var(--line-soft); padding-left: 1.5rem; }
+  .stat .num {
+    font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+    line-height: 1.1;
+    color: var(--accent-strong);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat .lbl { display: block; margin-top: 0.4rem; }
+
+  /* ---------- Callout ---------- */
+  .callout {
+    margin-top: 1.75rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--line-soft);
+    border-radius: 4px;
+    font-size: 0.95rem;
+    color: var(--muted);
+    max-width: 62ch;
+  }
+  .callout .mono { display: block; margin-bottom: 0.5rem; color: var(--accent-strong); }
+
+  /* ---------- Promises ---------- */
+  .promises {
+    list-style: none;
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 0.75rem;
+    max-width: 34rem;
+  }
+  .promises li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: baseline;
+    font-size: 1.15rem;
+  }
+  .promises .tick {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+
+  /* ---------- Join ---------- */
+  .join {
+    margin-top: clamp(4rem, 10vh, 6.5rem);
+    border-top: 1px solid var(--line);
+    padding: clamp(3.5rem, 9vh, 5.5rem) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .join::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 56px);
+    mask-image: linear-gradient(to top, black 0%, transparent 85%);
+    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 85%);
+    pointer-events: none;
+  }
+  .join .col { position: relative; }
+  .join h2 { font-size: clamp(2rem, 5.5vw, 3.2rem); max-width: 18ch; }
+  .join .body { margin-top: 1.25rem; display: grid; gap: 1rem; max-width: 36rem; }
+  .join-line {
+    font-size: 1.3rem;
+    font-style: italic;
+  }
+  .cta-row {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    align-items: center;
+  }
+  .btn {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 0.95rem 1.6rem;
+    border-radius: 999px;
+    transition: transform 0.15s ease, background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--paper);
+    border: 1px solid var(--accent);
+  }
+  .btn-primary:hover { background: var(--accent-strong); border-color: var(--accent-strong); color: var(--paper); }
+  .btn-ghost {
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent-strong); }
+  .sign {
+    margin-top: 2.75rem;
+    font-size: 1.45rem;
+    font-style: italic;
+  }
+  .sign .mono { display: block; font-style: normal; margin-top: 0.4rem; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid var(--line-soft);
+    padding: 2rem 0 3rem;
+  }
+  footer .col { display: grid; gap: 1rem; }
+  .disclaimer {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 70ch;
+  }
+  .foot-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .rise, .reveal { animation: none; transition: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav" aria-label="Main">
+    <a class="wordmark" href="#top">Build <b>w/</b> Carlyto</a>
+    <a class="nav-cta" href="#join">Join from day one</a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO / ENTRY 00 ============ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="col">
+      <p class="hero-eyebrow mono rise">Entry 00 · The opening page of a long journal</p>
+      <h1 id="hero-title" class="rise d1">Don't invest in a company. <em>Build with the entrepreneur.</em></h1>
+      <div class="hero-intro rise d2">
+        <p class="lede">My name is Carlyto. Over the coming years, I won't be building just one business — I will be building many.</p>
+      </div>
+      <div class="hero-creed rise d3" role="presentation">
+        <span>Some will succeed.</span>
+        <span>Some will fail.</span>
+        <span>Every lesson will be shared.</span>
+      </div>
+      <p class="hero-invite rise d4">This project is an invitation to join that journey from day one.</p>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 01 ============ -->
+  <section class="entry reveal" id="builder" aria-labelledby="h-builder">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 01</span><span>The Builder</span></div>
+      <h2 id="h-builder">Twelve years of operating real businesses — not watching from the sidelines.</h2>
+      <div class="body">
+        <p class="standfirst">Behind Carlyto is an operator from a remote overseas island territory — a small, demanding market where a business survives on discipline, not hype.</p>
+        <p>Banking, hospitality, maritime logistics: three different industries, one constant — taking responsibility for the numbers, the teams, and the customers.</p>
+        <p class="quiet">For personal security, Carlyto builds under a pseudonym. The face stays partly off-camera; the track record does not.</p>
+      </div>
+      <figure class="portrait">
+        <div class="frame"><span class="mono">Portrait to come<br>lower face only</span></div>
+        <figcaption class="mono">The builder — anonymity by design.</figcaption>
+      </figure>
+      <ul class="ledger timeline">
+        <li><span class="ref">2014–2016</span><span class="what">Corporate banking — Société Générale group, overseas branch.<small>Management control and corporate cash management: budget control, financial reporting, decision tools — supporting SMEs and large accounts from inside their numbers.</small></span></li>
+        <li><span class="ref">2018–2025</span><span class="what">Co-manager — hospitality residence.<small>Ran a hospitality business end to end: finance, operations, sales, revenue management, teams and guest experience. <strong>Grew revenue by 40% in three years.</strong></small></span></li>
+        <li><span class="ref">2025–now</span><span class="what">Operations manager — shipchandling.<small>Procurement, inventory and maritime logistics for demanding industrial clients: mining sites, ports, naval forces. An environment with zero tolerance for missed deliveries.</small></span></li>
+      </ul>
+      <p class="ledger-note">A decade of P&amp;Ls, payroll, suppliers and customers — hands-on and real. That is the foundation this project is built on.</p>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 02 ============ -->
+  <section class="entry reveal" id="vision" aria-labelledby="h-vision">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 02</span><span>The Vision</span></div>
+      <h2 id="h-vision">A community that follows the whole journey — not just the highlight reel.</h2>
+      <div class="body">
+        <p class="standfirst">Most entrepreneurs spend years searching for investors. I want to build something different.</p>
+        <p>A community that follows the complete entrepreneurial journey — not only the successes, but also the challenges, decisions, mistakes, and victories.</p>
+        <p>Every NFT holder becomes part of this adventure. Not as a shareholder. Not as someone who is promised profits. But as an early supporter helping transform ambitious ideas into real businesses.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 03 ============ -->
+  <section class="entry reveal" id="opportunity" aria-labelledby="h-opportunity">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 03</span><span>The Opportunity</span></div>
+      <h2 id="h-opportunity">A market at its low point — in one of the most promising places on earth.</h2>
+      <div class="body">
+        <p class="standfirst">I build from an island territory that has just been through a sharp market downturn. Assets are undervalued, and many owners are looking for a way out.</p>
+        <p>Yet this same territory keeps being cited among the best places in the world to get through global disruption — and as a land of the future for humanity: remote, resource-rich, and self-reliant.</p>
+        <p>Buy well while the market is down, in a place the future wants to be. That is the window this project is built to seize.</p>
+      </div>
+      <div class="stats" role="group" aria-label="The market in two numbers">
+        <div class="stat">
+          <div class="num">$16B</div>
+          <span class="lbl mono">Annual GDP of the target zone</span>
+        </div>
+        <div class="stat">
+          <div class="num">500,000+</div>
+          <span class="lbl mono">Citizens &amp; consumers</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 04 ============ -->
+  <section class="entry reveal" id="plan" aria-labelledby="h-plan">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 04</span><span>The Plan</span></div>
+      <h2 id="h-plan">Take a real position in an entire economy.</h2>
+      <div class="body">
+        <p>The ambition is not one business. It is to take the lead on a significant share of our local economy, by acquiring:</p>
+      </div>
+      <ul class="ledger">
+        <li><span class="ref">A-01</span><span class="what">Land and space.</span></li>
+        <li><span class="ref">A-02</span><span class="what">Commercial premises.</span></li>
+        <li><span class="ref">A-03</span><span class="what">Existing companies.</span></li>
+        <li><span class="ref">A-04</span><span class="what">Industrial operations.</span></li>
+        <li><span class="ref">A-05</span><span class="what">A vehicle brand.</span></li>
+        <li><span class="ref">A-06</span><span class="what">Natural resources.</span></li>
+        <li><span class="ref">A-07</span><span class="what">Tourist destinations.</span></li>
+      </ul>
+      <p class="ledger-note">To execute, I am assembling a team of experts around the project — starting with a mergers &amp; acquisitions specialist, already being brought on board to lead the buy-side.</p>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 05 ============ -->
+  <section class="entry reveal" id="ventures" aria-labelledby="h-ventures">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 05</span><span>Ventures in Motion</span></div>
+      <h2 id="h-ventures">The first builds are already on the table.</h2>
+      <div class="body">
+        <p>Four ventures open the portfolio:</p>
+      </div>
+      <ul class="ledger">
+        <li><span class="ref">V-01</span><span class="what">Lifestyle platform.<small>One site for everything happening here — nightlife and daytime activities.</small></span></li>
+        <li><span class="ref">V-02</span><span class="what">Online hypermarket.<small>18,000 product references, plugged directly into suppliers' available stock.</small></span></li>
+        <li><span class="ref">V-03</span><span class="what">Digital wallet.<small>Replace cash in our market first — then open a local crypto exchange.</small></span></li>
+        <li><span class="ref">V-04</span><span class="what">Digital agency.<small>Tailor-made digital solutions for local businesses.</small></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 06 ============ -->
+  <section class="entry reveal" id="funds" aria-labelledby="h-funds">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 06</span><span>What Your Support Funds</span></div>
+      <h2 id="h-funds">Where the money goes.</h2>
+      <div class="body">
+        <p>Funds raised through the NFT collection will be used to:</p>
+      </div>
+      <ul class="ledger">
+        <li><span class="ref">F-01</span><span class="what">Launch new companies.</span></li>
+        <li><span class="ref">F-02</span><span class="what">Acquire existing businesses.</span></li>
+        <li><span class="ref">F-03</span><span class="what">Finance new products and services.</span></li>
+        <li><span class="ref">F-04</span><span class="what">Build teams.</span></li>
+        <li><span class="ref">F-05</span><span class="what">Invest in technology.</span></li>
+        <li><span class="ref">F-06</span><span class="what">Cover marketing and operational growth.</span></li>
+        <li><span class="ref">F-07</span><span class="what">Create long-term value across multiple ventures.</span></li>
+      </ul>
+      <p class="ledger-note">Every major use of funds will be documented publicly. Transparency is one of the foundations of this project.</p>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 07 ============ -->
+  <section class="entry reveal" id="transparency" aria-labelledby="h-transparency">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 07</span><span>Radical Transparency</span></div>
+      <h2 id="h-transparency">Nothing will be hidden.</h2>
+      <div class="body">
+        <p class="standfirst">Entrepreneurship is often hidden behind polished success stories. This project will be different.</p>
+        <p>NFT holders will receive regular updates including:</p>
+      </div>
+      <ul class="ledger">
+        <li><span class="ref">U-01</span><span class="what">New businesses launched.</span></li>
+        <li><span class="ref">U-02</span><span class="what">Acquisitions completed.</span></li>
+        <li><span class="ref">U-03</span><span class="what">Revenue milestones.</span></li>
+        <li><span class="ref">U-04</span><span class="what">Major investments.</span></li>
+        <li><span class="ref">U-05</span><span class="what">Successes <em>and</em> failures.</span></li>
+        <li><span class="ref">U-06</span><span class="what">Lessons learned.</span></li>
+        <li><span class="ref">U-07</span><span class="what">Future objectives.</span></li>
+      </ul>
+      <p class="ledger-note">The goal is to build together while documenting the entire journey.</p>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 08 ============ -->
+  <section class="entry reveal" id="commitment" aria-labelledby="h-commitment">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 08</span><span>Long-Term Commitment</span></div>
+      <h2 id="h-commitment">Strengthening the ecosystem as the businesses grow.</h2>
+      <div class="body">
+        <p>As my businesses grow, my objective is to strengthen the ecosystem around this collection.</p>
+        <p>When financially appropriate and at my sole discretion, I may use part of the profits generated by my businesses to acquire NFTs from the open market. These purchases are intended to support the community over the long term.</p>
+      </div>
+      <div class="callout">
+        <span class="mono">Please read carefully</span>
+        Such purchases are not guaranteed, do not represent an obligation, and should never be interpreted as a promise of financial return.
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 09 ============ -->
+  <section class="entry reveal" id="why-nfts" aria-labelledby="h-why">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 09</span><span>Why NFTs?</span></div>
+      <h2 id="h-why">Because NFTs represent membership.</h2>
+      <div class="body">
+        <p>Each NFT tells the story of someone who believed before success became obvious.</p>
+        <p class="standfirst">It is proof that you were here from the beginning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 10 ============ -->
+  <section class="entry reveal" id="community" aria-labelledby="h-community">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 10</span><span>The Community</span></div>
+      <h2 id="h-community">More than a collection — a network of builders.</h2>
+      <div class="body">
+        <p>It is a network of entrepreneurs, builders, creators, investors, developers, designers, marketers, and ambitious people who enjoy building meaningful projects.</p>
+        <p>Members may receive:</p>
+      </div>
+      <ul class="ledger">
+        <li><span class="ref">M-01</span><span class="what">Behind-the-scenes updates.</span></li>
+        <li><span class="ref">M-02</span><span class="what">Early access to future projects.</span></li>
+        <li><span class="ref">M-03</span><span class="what">Community discussions.</span></li>
+        <li><span class="ref">M-04</span><span class="what">Voting opportunities on selected non-business decisions.</span></li>
+        <li><span class="ref">M-05</span><span class="what">Exclusive digital content.</span></li>
+        <li><span class="ref">M-06</span><span class="what">Future surprises as the ecosystem expands.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ ENTRY 11 ============ -->
+  <section class="entry reveal" id="promise" aria-labelledby="h-promise">
+    <div class="col">
+      <div class="entry-head mono"><span class="no">Entry 11</span><span>My Commitment</span></div>
+      <h2 id="h-promise">I cannot promise success. No entrepreneur can.</h2>
+      <div class="body">
+        <p>What I can promise is:</p>
+      </div>
+      <ul class="promises">
+        <li><span class="tick">[x]</span><span>I will work relentlessly.</span></li>
+        <li><span class="tick">[x]</span><span>I will stay transparent.</span></li>
+        <li><span class="tick">[x]</span><span>I will communicate honestly.</span></li>
+        <li><span class="tick">[x]</span><span>I will continue building.</span></li>
+      </ul>
+      <div class="body" style="margin-top: 1.5rem;">
+        <p class="quiet">This collection is not about speculation. It is about supporting a builder with a long-term vision.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ JOIN ============ -->
+  <section class="join reveal" id="join" aria-labelledby="h-join">
+    <div class="col">
+      <p class="mono" style="margin-bottom: 1.5rem;">Entry 12 · Join From Day One</p>
+      <h2 id="h-join">Every great company begins with a handful of believers.</h2>
+      <div class="body">
+        <p>This collection is for those who enjoy the process of building — not only celebrating the result.</p>
+        <p class="join-line">If you believe in long-term entrepreneurship, transparency, and relentless execution&hellip; welcome.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#join">Get the collection — coming soon</a>
+        <a class="btn btn-ghost" href="#vision">Read the vision again</a>
+      </div>
+      <p class="sign">Let's build together. <span class="mono">— Build with Carlyto</span></p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="col">
+    <p class="disclaimer">
+      <strong>Disclaimer.</strong> Build with Carlyto NFTs are digital collectibles that represent community membership. They are not shares, securities, or investment products, and they confer no ownership, dividends, or entitlement to profits of any business. Nothing on this page is financial advice, and nothing here constitutes a promise, guarantee, or expectation of financial return. Any future buy-backs are discretionary and not an obligation. Build only with what you are comfortable supporting.
+    </p>
+    <div class="foot-row mono">
+      <span>&copy; 2026 Build with Carlyto</span>
+      <span>Documented in public, from day one.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var sections = document.querySelectorAll(".reveal");
+    if (reduced || !("IntersectionObserver" in window)) {
+      sections.forEach(function (el) { el.classList.add("in"); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    sections.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
