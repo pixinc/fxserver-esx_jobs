@@ -405,6 +405,8 @@
   }
   .nav-cta { background: var(--accent); border-color: var(--accent); color: #fff; }
   .nav-cta:hover { background: var(--accent-strong); border-color: var(--accent-strong); color: #fff; }
+  .nav-members { text-decoration: none; color: var(--muted); }
+  .nav-members:hover { color: var(--accent-strong); }
   .hero-stats {
     margin-top: 2.75rem;
     display: flex;
@@ -448,7 +450,10 @@
 <header>
   <nav class="nav" aria-label="Main">
     <a class="wordmark" href="#top">Build <b>w/</b> Carlyto</a>
-    <a class="nav-cta" href="#join">Join from day one</a>
+    <div style="display: flex; align-items: center; gap: 1.1rem;">
+      <a class="nav-members mono" href="/members">Members</a>
+      <a class="nav-cta" href="#join">Join from day one</a>
+    </div>
   </nav>
   <div class="progress" aria-hidden="true"></div>
 </header>

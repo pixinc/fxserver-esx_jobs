@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Members — Build with Carlyto</title>
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --paper: #FFFFFF;
+    --paper-raised: #F7F7F5;
+    --ink: #14171C;
+    --muted: #5C6470;
+    --line: #D8D8D3;
+    --line-soft: #E9E9E5;
+    --accent: #B26F1D;
+    --accent-strong: #8F5714;
+    --gold: #C8963A;
+    --serif: "Charter", "Bitstream Charter", "Iowan Old Style", Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--serif); line-height: 1.7; }
+  .mono { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  a { color: var(--accent-strong); }
+  .col { max-width: 44rem; margin-inline: auto; padding-inline: clamp(1.25rem, 5vw, 2.5rem); }
+
+  header.top { border-bottom: 1px solid var(--line-soft); }
+  .nav { max-width: 44rem; margin-inline: auto; padding: 0.85rem clamp(1.25rem, 5vw, 2.5rem); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .wordmark { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+  .wordmark b { color: var(--accent); }
+  .session { display: flex; align-items: center; gap: 0.75rem; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; }
+  .tierchip { padding: 0.25rem 0.7rem; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.6rem; }
+  .tierchip.dayone { background: #14171C; color: var(--gold); border: 1px solid var(--gold); }
+  .tierchip.builder { background: rgba(178, 111, 29, 0.09); color: var(--accent-strong); border: 1px solid var(--accent); }
+  button { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.13em; text-transform: uppercase; cursor: pointer; border-radius: 999px; padding: 0.85rem 1.5rem; border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+  button:hover { background: var(--accent-strong); border-color: var(--accent-strong); }
+  button.ghost { background: transparent; color: var(--ink); border-color: var(--line); padding: 0.45rem 0.9rem; font-size: 0.62rem; }
+  button.ghost:hover { border-color: var(--accent); color: var(--accent-strong); }
+
+  main { padding: clamp(2.5rem, 7vh, 4.5rem) 0 4rem; }
+  h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 500; letter-spacing: -0.01em; margin-bottom: 0.75rem; text-wrap: balance; }
+  h1 em { font-style: italic; color: var(--accent-strong); }
+  .lede { color: var(--muted); max-width: 34rem; }
+
+  /* Gate */
+  #gate { text-align: left; }
+  #gate .box { margin-top: 2rem; border: 1px solid var(--line); background: var(--paper-raised); padding: 2rem; max-width: 30rem; }
+  #gate .box p { font-size: 0.92rem; color: var(--muted); margin-bottom: 1.25rem; }
+  #err { margin-top: 1rem; font-family: var(--mono); font-size: 0.7rem; color: #8A3B2E; display: none; }
+
+  /* Area */
+  #area { display: none; }
+  .section { margin-top: 2.75rem; }
+  .shead { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .shead::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .shead .tag { color: var(--accent); }
+  .card { border: 1px solid var(--line); padding: 1.25rem 1.5rem; }
+  .card + .card { border-top: 0; }
+  .card .t { font-weight: 700; font-size: 0.98rem; }
+  .card .d { font-size: 0.9rem; color: var(--muted); }
+  .locked { position: relative; background: var(--paper-raised); }
+  .locked .t, .locked .d { opacity: 0.45; }
+  .locked::after {
+    content: "Réservé Day One — 🔒";
+    position: absolute; right: 1.25rem; top: 50%; transform: translateY(-50%);
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
+    background: #14171C; padding: 0.35rem 0.7rem; border-radius: 999px;
+  }
+  .viponly { display: none; }
+  body.dayone .viponly { display: block; }
+  body.dayone .locked::after { display: none; }
+  body.dayone .locked .t, body.dayone .locked .d { opacity: 1; }
+  body.dayone .locked { background: transparent; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <nav class="nav">
+    <a class="wordmark" href="/">Build <b>w/</b> Carlyto</a>
+    <div class="session" id="session" style="display:none;">
+      <span class="tierchip" id="chip"></span>
+      <span class="mono" id="addr"></span>
+      <button class="ghost" id="logout">Sign out</button>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="col">
+
+    <!-- ======== GATE ======== -->
+    <div id="gate">
+      <p class="mono" style="margin-bottom:1.25rem;">Private area · token-gated</p>
+      <h1>The inside of the ledger. <em>Holders only.</em></h1>
+      <p class="lede">This area opens with your NFT, not a password. Connect the wallet that holds your Day One or Builder token, sign a message (free, no transaction), and the ledger opens.</p>
+      <div class="box">
+        <p>Your signature only proves ownership of the wallet — it costs nothing and moves nothing.</p>
+        <button id="connect">Connect wallet &amp; sign in</button>
+        <p id="err"></p>
+      </div>
+    </div>
+
+    <!-- ======== MEMBERS AREA ======== -->
+    <div id="area">
+      <p class="mono" style="margin-bottom:1.25rem;">Welcome to the inside</p>
+      <h1 id="hello">The ledger, <em>unabridged.</em></h1>
+      <p class="lede">Everything below is reserved for holders. Day One badges see further and speak louder.</p>
+
+      <div class="section">
+        <div class="shead mono"><span class="tag">M-01</span><span>The Ledger — full entries</span></div>
+        <div class="card"><p class="t">Monthly update — the real numbers</p><p class="d">Revenue, costs, deals in progress, mistakes included. The public site gets the summary; you get the entry itself.</p></div>
+        <div class="card"><p class="t">Venture dashboards</p><p class="d">Hypermarket, wallet, lifestyle platform, software house — live status, next milestones.</p></div>
+      </div>
+
+      <div class="section">
+        <div class="shead mono"><span class="tag">M-02</span><span>Deal Room</span></div>
+        <div class="card locked"><p class="t">Acquisitions in negotiation</p><p class="d">What we are buying before it is public: targets, rationale, state of talks. Day One reads the deal memos first.</p></div>
+        <div class="card locked"><p class="t">Quarterly call with Carlyto</p><p class="d">Small-group video call, direct questions, no filter.</p></div>
+      </div>
+
+      <div class="section">
+        <div class="shead mono"><span class="tag">M-03</span><span>Votes</span></div>
+        <div class="card"><p class="t">Open votes — non-business decisions</p><p class="d">Community choices: naming, events, content priorities. Builder votes count ×1, Day One votes count ×10.</p></div>
+      </div>
+
+      <div class="section">
+        <div class="shead mono"><span class="tag">M-04</span><span>Early access</span></div>
+        <div class="card"><p class="t">Venture products, before launch</p><p class="d">Beta of the hypermarket, wallet allowlist, lifestyle platform invites — holders first, public later.</p></div>
+        <div class="card locked"><p class="t">Guaranteed chapter allocation</p><p class="d">Every future chapter drop: Day One never needs an allowlist spot — one allocation is always reserved.</p></div>
+      </div>
+
+      <div class="section viponly">
+        <div class="shead mono"><span class="tag">M-05</span><span>Concierge — Day One</span></div>
+        <div class="card"><p class="t">The first night</p><p class="d">Every hotel or venue we acquire: Day One sleeps there before the public opening.</p></div>
+        <div class="card"><p class="t">Founders' dinner &amp; HQ</p><p class="d">Annual dinner at the 1,674 m² headquarters, in front of the wall where your ledger name is engraved.</p></div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var $ = function (id) { return document.getElementById(id); };
+
+    function showArea(me) {
+      document.body.classList.toggle('dayone', me.tier === 'dayone');
+      $('gate').style.display = 'none';
+      $('area').style.display = 'block';
+      $('session').style.display = 'flex';
+      $('chip').textContent = me.tier === 'dayone' ? 'Day One' : 'Builder';
+      $('chip').className = 'tierchip ' + (me.tier === 'dayone' ? 'dayone' : 'builder');
+      $('addr').textContent = me.address.slice(0, 6) + '…' + me.address.slice(-4);
+    }
+
+    function fail(msg) {
+      var e = $('err');
+      e.textContent = msg;
+      e.style.display = 'block';
+    }
+
+    // Restore an existing session
+    fetch('/api/me').then(function (r) { return r.ok ? r.json() : null; }).then(function (me) {
+      if (me) showArea(me);
+    });
+
+    $('connect').addEventListener('click', async function () {
+      $('err').style.display = 'none';
+      try {
+        if (!window.ethereum) return fail('No wallet detected — open this page in MetaMask, Rabby or a wallet browser.');
+        var accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        var address = accounts[0];
+        var nonce = (await (await fetch('/api/nonce')).json()).nonce;
+        var message = 'Build with Carlyto — sign-in\n\nAddress: ' + address.toLowerCase() + '\nNonce: ' + nonce;
+        var hex = '0x' + Array.from(new TextEncoder().encode(message)).map(function (b) { return b.toString(16).padStart(2, '0'); }).join('');
+        var signature = await window.ethereum.request({ method: 'personal_sign', params: [hex, address] });
+        var r = await fetch('/api/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ address: address, signature: signature })
+        });
+        var json = await r.json();
+        if (!r.ok) return fail(json.error || 'sign-in failed');
+        showArea(json);
+      } catch (e) {
+        fail(e && e.message ? e.message : 'sign-in cancelled');
+      }
+    });
+
+    $('logout').addEventListener('click', function () {
+      fetch('/api/logout').then(function () { location.reload(); });
+    });
+  })();
+</script>
+
+</body>
+</html>
