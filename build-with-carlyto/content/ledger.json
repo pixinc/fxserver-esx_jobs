@@ -1,0 +1,42 @@
+{
+  "entries": [
+    {
+      "id": "2026-07-a",
+      "date": "July 2026",
+      "title": "Entry — the ledger opens",
+      "body": "The collection's private ledger starts here. Everything the public site summarizes, this feed details: numbers, decisions, mistakes, next moves."
+    },
+    {
+      "id": "2026-07-b",
+      "date": "July 2026",
+      "title": "Headquarters — renovation in progress",
+      "body": "The 1,674 m² property is being converted into offices: the production base for every venture. Target: operational before the shipchandling mission ends in June."
+    },
+    {
+      "id": "2026-07-c",
+      "date": "July 2026",
+      "title": "Online hypermarket — catalogue build",
+      "body": "18,000 supplier-backed references being wired to live stock. Beta opens to holders first."
+    },
+    {
+      "id": "2026-07-d",
+      "date": "July 2026",
+      "title": "Team — first seats",
+      "body": "M&A specialist onboarding; marketing specialist identified. More seats open as ventures launch."
+    }
+  ],
+  "dealroom": [
+    {
+      "id": "dr-2026-07-a",
+      "date": "July 2026",
+      "title": "M&A brand — negotiation open",
+      "body": "In talks to acquire the brand of an established mergers & acquisitions firm. It becomes the buy-side machine for land, premises, companies and tourism assets. Status: terms being discussed."
+    },
+    {
+      "id": "dr-2026-07-b",
+      "date": "July 2026",
+      "title": "Watchlist — distressed assets",
+      "body": "Mapping owners looking for a way out after the downturn: commercial premises and seafront positions first. Detailed memos will land here before anything is public."
+    }
+  ]
+}

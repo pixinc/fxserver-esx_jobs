@@ -15,7 +15,12 @@ api/
   nonce.js        GET  — issues a sign-in nonce (10 min, signed cookie)
   verify.js       POST — verifies the wallet signature + NFT ownership, opens a 7-day session
   me.js           GET  — returns the current session (address + tier)
+  ledger.js       GET  — session-gated ledger feed; Deal Room + private channel only for Day One
   logout.js       GET  — clears the session
+content/
+  ledger.json     The private ledger entries (edit + push = published to members)
+contracts/
+  BuildWithCarlyto.sol  ERC-721 (x2 deployments: Day One 100, Builder 1500) — see contracts/README.md
 vercel.json       framework: null (static + serverless), cleanUrls
 package.json      ethers (signature verification)
 ```
@@ -39,6 +44,7 @@ package.json      ethers (signature verification)
 | `BUILDER_CONTRACT` | when deployed | Builder ERC-721 contract address. |
 | `ETH_RPC_URL` | recommended | JSON-RPC endpoint (Alchemy/Infura). Defaults to a public node. |
 | `DEMO_VIPS` | optional | Demo mode only: comma-separated wallet addresses treated as Day One. |
+| `DAYONE_CHANNEL_URL` | optional | Invite link of the private Day One channel (Telegram/Discord). Only ever sent to Day One sessions. |
 
 **Demo mode:** while `VIP_CONTRACT` and `BUILDER_CONTRACT` are unset, any wallet that signs in
 gets `builder` access, and wallets listed in `DEMO_VIPS` get `dayone` — so the members area can

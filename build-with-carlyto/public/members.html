@@ -111,13 +111,12 @@
 
       <div class="section">
         <div class="shead mono"><span class="tag">M-01</span><span>The Ledger — full entries</span></div>
-        <div class="card"><p class="t">Monthly update — the real numbers</p><p class="d">Revenue, costs, deals in progress, mistakes included. The public site gets the summary; you get the entry itself.</p></div>
-        <div class="card"><p class="t">Venture dashboards</p><p class="d">Hypermarket, wallet, lifestyle platform, software house — live status, next milestones.</p></div>
+        <div id="ledgerList"></div>
       </div>
 
       <div class="section">
         <div class="shead mono"><span class="tag">M-02</span><span>Deal Room</span></div>
-        <div class="card locked"><p class="t">Acquisitions in negotiation</p><p class="d">What we are buying before it is public: targets, rationale, state of talks. Day One reads the deal memos first.</p></div>
+        <div id="dealList"></div>
       </div>
 
       <div class="section">
@@ -133,7 +132,7 @@
 
       <div class="section viponly">
         <div class="shead mono"><span class="tag">M-05</span><span>Day One — private line</span></div>
-        <div class="card"><p class="t">Direct line to Carlyto</p><p class="d">A private Day One channel — ask anything, from anywhere in the world. Async by design: no meetings, no timezones, answers from the builder himself.</p></div>
+        <div class="card"><p class="t">Direct line to Carlyto</p><p class="d">A private Day One channel — ask anything, from anywhere in the world. Async by design: no meetings, no timezones, answers from the builder himself.</p><p id="channelP" style="margin-top:0.75rem;"><span class="mono" id="channelSoon">Channel opening soon</span></p></div>
         <div class="card"><p class="t">Your name on the wall — delivered to you</p><p class="d">Your ledger name engraved on the brass wall of the 1,674 m² headquarters. You receive the photo and the film of the engraving — you never need to travel; the building remembers you anyway.</p></div>
         <div class="card"><p class="t">Exclusive drops</p><p class="d">Digital collectibles and chapter airdrops reserved for the 100.</p></div>
       </div>
@@ -146,6 +145,32 @@
   (function () {
     var $ = function (id) { return document.getElementById(id); };
 
+    function esc(x) {
+      return String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function cardHtml(e, dateLabel) {
+      return '<div class="card"><p class="mono" style="margin-bottom:0.2rem;">' + esc(e.date || dateLabel || '') +
+             '</p><p class="t">' + esc(e.title) + '</p><p class="d">' + esc(e.body) + '</p></div>';
+    }
+
+    function loadLedger() {
+      fetch('/api/ledger').then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
+        if (!data) return;
+        document.getElementById('ledgerList').innerHTML = data.entries.map(function (e) { return cardHtml(e); }).join('');
+        var deal = document.getElementById('dealList');
+        if (data.dealroom) {
+          deal.innerHTML = data.dealroom.map(function (e) { return cardHtml(e); }).join('');
+        } else {
+          deal.innerHTML = '<div class="card locked"><p class="t">Acquisitions in negotiation</p><p class="d">Deal memos land here before anything is public. Day One reads them first.</p></div>';
+        }
+        if (data.channel) {
+          document.getElementById('channelP').innerHTML =
+            '<a href="' + esc(data.channel) + '" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:0.7rem;letter-spacing:0.13em;text-transform:uppercase;">Open the private channel →</a>';
+        }
+      });
+    }
+
     function showArea(me) {
       document.body.classList.toggle('dayone', me.tier === 'dayone');
       $('gate').style.display = 'none';
@@ -154,6 +179,7 @@
       $('chip').textContent = me.tier === 'dayone' ? 'Day One' : 'Builder';
       $('chip').className = 'tierchip ' + (me.tier === 'dayone' ? 'dayone' : 'builder');
       $('addr').textContent = me.address.slice(0, 6) + '…' + me.address.slice(-4);
+      loadLedger();
     }
 
     function fail(msg) {
