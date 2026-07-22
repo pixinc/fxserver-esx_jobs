@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/logo-mark.svg">
+<title>The Collection — Build w/ Carlyto</title>
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --bg: #0C0E11; --ink: #14171C; --muted: #8A8578; --gold: #E3B25B; --gold-deep: #B98A34;
+    --chalk: #EFE9DC; --amber: #B26F1D; --lagoon: #1E7F8C;
+    --serif: "Charter", "Bitstream Charter", "Iowan Old Style", Georgia, serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: radial-gradient(90rem 60rem at 50% -10%, #171B21, var(--bg) 60%);
+    color: #D9D5CC;
+    font-family: var(--serif);
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+  .mono { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+  .col { max-width: 72rem; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 2.5rem); }
+
+  header.top { border-bottom: 1px solid #22262D; }
+  .nav { max-width: 72rem; margin-inline: auto; padding: 0.9rem clamp(1.25rem, 4vw, 2.5rem); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .wordmark { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--chalk); text-decoration: none; display: flex; align-items: center; gap: 0.6rem; }
+  .wordmark b { color: var(--gold); }
+
+  main { padding: clamp(2.5rem, 7vh, 4.5rem) 0 5rem; }
+  h1 { font-size: clamp(1.9rem, 4.5vw, 3rem); font-weight: 500; letter-spacing: -0.01em; color: var(--chalk); text-wrap: balance; }
+  h1 em { font-style: italic; color: var(--gold); }
+  .lede { color: var(--muted); max-width: 42rem; margin-top: 0.75rem; }
+
+  section { margin-top: 3.25rem; }
+  .shead { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+  .shead::after { content: ""; flex: 1; height: 1px; background: linear-gradient(to right, #3A3627, transparent); }
+  .shead span { color: var(--gold-deep); }
+
+  /* ---- Timeline ---- */
+  .timeline { background: #12151A; border: 1px solid #262B33; padding: 1.1rem 1.5rem 1.3rem; display: grid; gap: 0.5rem; }
+  .timeline .row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .timeline .stage { font-size: 1.05rem; font-weight: 700; color: var(--gold); }
+  input[type="range"] { width: 100%; accent-color: var(--gold-deep); }
+  .ticks { display: flex; justify-content: space-between; }
+
+  /* ---- Cards ---- */
+  .cards { display: flex; flex-wrap: wrap; gap: 1.75rem; align-items: stretch; margin-top: 1.75rem; }
+  .card {
+    width: 19.5rem; flex: 0 1 auto;
+    border-radius: 10px; padding: 1.4rem 1.4rem 1.2rem;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; gap: 0.85rem;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    transition: transform 0.18s ease-out;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(to right, var(--cardgrid) 0 1px, transparent 1px 26px),
+      repeating-linear-gradient(to bottom, var(--cardgrid) 0 1px, transparent 1px 26px);
+    pointer-events: none;
+  }
+  .card > * { position: relative; }
+  .card .head { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; }
+  .card .head img { width: 30px; height: 30px; display: block; }
+  .card .serial { font-family: var(--mono); font-size: 0.72rem; font-variant-numeric: tabular-nums; }
+  .card .tier { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .card .title { font-size: 1.45rem; line-height: 1.15; font-weight: 500; }
+  .card .title em { font-style: italic; }
+  .card .rule { height: 1px; }
+  .name-plate { padding: 0.55rem 0.8rem; border-radius: 4px; }
+  .name-plate .lbl { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.7; }
+  .name-plate .nm { font-family: var(--mono); font-size: 0.95rem; letter-spacing: 0.12em; }
+  .badges { display: grid; gap: 0.35rem; margin-top: auto; }
+  .badges .b { display: flex; align-items: center; gap: 0.55rem; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; }
+  .badges .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; border: 1.5px solid currentColor; }
+  .badges .b.done .dot { background: currentColor; }
+  .badges .b.dim { opacity: 0.42; }
+  .badges .state { margin-left: auto; opacity: 0.85; text-align: right; }
+  .card .foot { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; }
+
+  .card.vip { background: linear-gradient(160deg, #191D24, #101318 65%); color: var(--chalk); --cardgrid: rgba(232,163,61,0.10); border: 1px solid #2A2F38; }
+  .card.vip .tier, .card.vip .serial, .card.vip .title em { color: var(--gold); }
+  .card.vip .rule { background: linear-gradient(to right, var(--gold), transparent); }
+  .card.vip .name-plate { background: rgba(232,163,61,0.12); border: 1px solid rgba(232,163,61,0.4); }
+  .card.vip .name-plate .nm { color: var(--gold); }
+  .card.vip .badges .b { color: var(--gold); }
+  .card.vip .badges .state { color: var(--chalk); }
+
+  .card.builder { background: #FBFAF7; color: var(--ink); --cardgrid: rgba(20,23,28,0.05); border: 1px solid #D8D8D3; }
+  .card.builder .tier, .card.builder .serial, .card.builder .title em { color: #8F5714; }
+  .card.builder .rule { background: linear-gradient(to right, var(--amber), transparent); }
+  .card.builder .name-plate { background: rgba(178,111,29,0.07); border: 1px solid rgba(178,111,29,0.35); }
+  .card.builder .name-plate .nm { color: #8F5714; }
+  .card.builder .badges .b { color: #8F5714; }
+  .card.builder .badges .state { color: var(--ink); }
+
+  .card.chapter { background: #F0F8F8; color: #10333A; --cardgrid: rgba(30,127,140,0.08); border: 1px solid #BFDDE0; }
+  .card.chapter .tier, .card.chapter .serial, .card.chapter .title em { color: var(--lagoon); }
+  .card.chapter .rule { background: linear-gradient(to right, var(--lagoon), transparent); }
+  .card.chapter .name-plate { background: rgba(30,127,140,0.08); border: 1px solid rgba(30,127,140,0.35); }
+  .card.chapter .name-plate .nm { color: var(--lagoon); }
+  .card.chapter .badges .b { color: var(--lagoon); }
+  .card.chapter .badges .state { color: #10333A; }
+
+  /* ---- Physical kit ---- */
+  .kit { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.5rem; }
+  .kit .item { border: 1px solid #262B33; background: #12151A; padding: 1.5rem; }
+  .kit .item .t { color: var(--chalk); font-weight: 700; margin-bottom: 0.4rem; }
+  .kit .item .d { font-size: 0.9rem; color: var(--muted); }
+  .kit .item .tag { display: inline-block; margin-bottom: 0.8rem; color: var(--gold-deep); }
+
+  .note { margin-top: 2.5rem; font-size: 0.82rem; color: var(--muted); max-width: 74ch; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <nav class="nav">
+    <a class="wordmark" href="/"><img src="/logo-gold.svg" width="24" height="24" alt="">Build <b>w/</b> Carlyto</a>
+    <span class="mono">The collection — preview</span>
+  </nav>
+</header>
+
+<main>
+  <div class="col">
+    <p class="mono" style="margin-bottom:1.25rem;">Membership badges · Ethereum · preview artwork</p>
+    <h1>Three tiers. One ledger. <em>Badges that live.</em></h1>
+    <p class="lede">Every token is an entry in the founding ledger. The holder engraves a name once — on-chain, forever. Then the badge evolves: each venture launched, each acquisition closed is stamped into the metadata. Drag the timeline to watch a badge live through the years.</p>
+
+    <section>
+      <div class="shead mono"><span>01</span>The timeline — badges evolve as we build</div>
+      <div class="timeline">
+        <div class="row"><span class="mono">Drag to travel</span><span class="stage" id="stageLabel">Mint — day 0</span></div>
+        <input type="range" id="t" min="0" max="3" step="1" value="0" aria-label="Timeline stage">
+        <div class="ticks">
+          <span class="mono">Mint 2026</span><span class="mono">+6 months</span><span class="mono">2027</span><span class="mono">2028</span>
+        </div>
+      </div>
+
+      <div class="cards">
+        <!-- Day One -->
+        <article class="card vip" aria-label="Day One card">
+          <div class="head"><img src="/logo-gold.svg" alt=""><span class="serial">007 / 100</span></div>
+          <span class="tier">Day One · Ink &amp; Gold</span>
+          <div class="title">Build with <em>Carlyto</em></div>
+          <div class="rule"></div>
+          <div class="name-plate"><div class="lbl">Ledger name — engraved on-chain</div><div class="nm">SASHA_K</div></div>
+          <div class="badges" id="badgesVip"></div>
+          <div class="foot"><span>Chapters witnessed: <b id="chVip">0</b></span><span>ERC-721 · ETH</span></div>
+        </article>
+
+        <!-- Builder -->
+        <article class="card builder" aria-label="Builder card">
+          <div class="head"><img src="/logo-mark.svg" alt=""><span class="serial">0421 / 1500</span></div>
+          <span class="tier">Builder · Paper &amp; Amber</span>
+          <div class="title">Build with <em>Carlyto</em></div>
+          <div class="rule"></div>
+          <div class="name-plate"><div class="lbl">Ledger name — engraved on-chain</div><div class="nm">NOA.ETH</div></div>
+          <div class="badges" id="badgesBuilder"></div>
+          <div class="foot"><span>Chapters witnessed: <b id="chBuilder">0</b></span><span>ERC-721 · ETH</span></div>
+        </article>
+
+        <!-- Chapter -->
+        <article class="card chapter" aria-label="Chapter 1 card">
+          <div class="head"><img src="/logo-mark.svg" alt=""><span class="serial">128 / 400</span></div>
+          <span class="tier">Chapter 01 · Lagoon</span>
+          <div class="title">The <em>Hypermarket</em> Chapter</div>
+          <div class="rule"></div>
+          <div class="name-plate"><div class="lbl">Chapter goal</div><div class="nm">$120,000</div></div>
+          <div class="badges" id="badgesChapter"></div>
+          <div class="foot"><span id="chapterState">State: announced</span><span>ERC-721 · ETH</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="shead mono"><span>02</span>What each tier unlocks</div>
+      <div class="kit">
+        <div class="item">
+          <span class="tag mono">Day One — 100 only</span>
+          <p class="t">The inner circle</p>
+          <p class="d">Deal Room (acquisitions before they are public), a direct async line to Carlyto, votes ×10, guaranteed allocation on every future chapter, ledger name engraved on the brass wall of the HQ — photo and film delivered to you, wherever you live.</p>
+        </div>
+        <div class="item">
+          <span class="tag mono">Builder — 1,500</span>
+          <p class="t">The working community</p>
+          <p class="d">The full monthly ledger — real numbers, mistakes included — venture dashboards, community votes, and early access to every product we launch: hypermarket beta, wallet allowlist, platform invites.</p>
+        </div>
+        <div class="item">
+          <span class="tag mono">Chapters — per venture</span>
+          <p class="t">Fund one build at a time</p>
+          <p class="d">Each acquisition or venture opens a small themed drop with its funding goal stated up front. We raise as we prove — never everything in advance. Early chapters are the cheapest they will ever be.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shead mono"><span>03</span>The physical twin — Day One</div>
+      <div class="kit">
+        <div class="item">
+          <span class="tag mono">Metal card</span>
+          <p class="t">Matte black metal, gold engraving, NFC</p>
+          <p class="d">Serial and ledger name engraved. Tap a phone on it: it opens the live badge with its up-to-date stamps. Shipped worldwide.</p>
+        </div>
+        <div class="item">
+          <span class="tag mono">Registry entry</span>
+          <p class="t">Letterpress on cotton paper</p>
+          <p class="d">The ledger entry of the mint day, hand-numbered, gold-foil stamped, delivered in a lacquered box with the card.</p>
+        </div>
+        <div class="item">
+          <span class="tag mono">The wall</span>
+          <p class="t">Your name in the building</p>
+          <p class="d">Every Day One name engraved on the brass founders' wall at the 1,674 m² headquarters. The building remembers you — even from the other side of the world.</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="note"><b style="color:var(--chalk);">Disclaimer.</b> Build with Carlyto NFTs are membership badges — digital collectibles. They are not shares or securities, confer no ownership or profit rights, and nothing here is financial advice or a promise of return. Artwork shown is preview material; final artwork may evolve.</p>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var stages = [
+      { label: 'Mint — day 0', ch: 0,
+        b: [['HQ 1,674 m²', 'Renovating', 'mid'], ['M&A Brand', 'In negotiation', 'mid'], ['Hypermarket', 'Announced', 'dim'], ['Wallet', '—', 'dim'], ['Lifestyle', '—', 'dim'], ['Software house', '—', 'dim']],
+        chapter: 'State: announced' },
+      { label: '+6 months', ch: 1,
+        b: [['HQ 1,674 m²', 'Open', 'done'], ['M&A Brand', 'Acquired', 'done'], ['Hypermarket', 'In build', 'mid'], ['Wallet', 'Announced', 'dim'], ['Lifestyle', 'Announced', 'dim'], ['Software house', 'In build', 'mid']],
+        chapter: 'State: funding live' },
+      { label: '2027', ch: 2,
+        b: [['HQ 1,674 m²', 'Open', 'done'], ['M&A Brand', 'Acquired', 'done'], ['Hypermarket', 'Launched', 'done'], ['Wallet', 'In build', 'mid'], ['Lifestyle', 'Launched', 'done'], ['Software house', 'Launched', 'done']],
+        chapter: 'State: venture launched' },
+      { label: '2028', ch: 3,
+        b: [['HQ 1,674 m²', 'Open', 'done'], ['M&A Brand', 'Acquired', 'done'], ['Hypermarket', '18,000 refs live', 'done'], ['Wallet', 'Launched', 'done'], ['Lifestyle', 'Launched', 'done'], ['Software house', 'Launched', 'done']],
+        chapter: 'State: milestone reached' }
+    ];
+
+    function renderBadges(el, list) {
+      el.innerHTML = list.map(function (b) {
+        var cls = b[2] === 'done' ? 'b done' : (b[2] === 'dim' ? 'b dim' : 'b');
+        return '<div class="' + cls + '"><span class="dot"></span>' + b[0] + '<span class="state">' + b[1] + '</span></div>';
+      }).join('');
+    }
+
+    var slider = document.getElementById('t');
+    function update() {
+      var st = stages[+slider.value];
+      document.getElementById('stageLabel').textContent = st.label;
+      renderBadges(document.getElementById('badgesVip'), st.b);
+      renderBadges(document.getElementById('badgesBuilder'), st.b);
+      renderBadges(document.getElementById('badgesChapter'), st.b.slice(2, 5));
+      document.getElementById('chVip').textContent = st.ch;
+      document.getElementById('chBuilder').textContent = st.ch;
+      document.getElementById('chapterState').textContent = st.chapter;
+    }
+    slider.addEventListener('input', update);
+    update();
+  })();
+</script>
+
+</body>
+</html>

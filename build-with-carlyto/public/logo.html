@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml" href="/logo-mark.svg">
+<title>Brand — Build w/ Carlyto</title>
+<style>
+  :root {
+    --paper: #FFFFFF; --paper-raised: #F7F7F5; --ink: #14171C; --muted: #5C6470;
+    --line: #D8D8D3; --line-soft: #E9E9E5; --accent: #B26F1D; --accent-strong: #8F5714;
+    --gold: #E3B25B; --chalk: #EFE9DC;
+    --serif: "Charter", "Bitstream Charter", "Iowan Old Style", Georgia, serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--serif); line-height: 1.7; }
+  .mono { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  a { color: var(--accent-strong); }
+  .col { max-width: 60rem; margin-inline: auto; padding-inline: clamp(1.25rem, 5vw, 2.5rem); }
+
+  header.top { border-bottom: 1px solid var(--line-soft); }
+  .nav { max-width: 60rem; margin-inline: auto; padding: 0.85rem clamp(1.25rem, 5vw, 2.5rem); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .wordmark { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 0.6rem; }
+  .wordmark b { color: var(--accent); }
+
+  main { padding: clamp(2.5rem, 7vh, 4.5rem) 0 4.5rem; }
+  h1 { font-size: clamp(1.9rem, 5vw, 2.8rem); font-weight: 500; letter-spacing: -0.01em; text-wrap: balance; margin-bottom: 0.75rem; }
+  h1 em { font-style: italic; color: var(--accent-strong); }
+  .lede { color: var(--muted); max-width: 38rem; }
+
+  section { margin-top: 3rem; }
+  .shead { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+  .shead::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .shead span { color: var(--accent-strong); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1.5rem; }
+  .tile { border: 1px solid var(--line); padding: 2.5rem 2rem 2.75rem; display: grid; place-items: center; position: relative; min-height: 13rem; }
+  .tile.dark { background: #14171C; border-color: #2A2F38; }
+  .tile .lbl { position: absolute; left: 1rem; bottom: 0.7rem; }
+  .tile.dark .lbl { color: rgba(255,255,255,0.55); }
+
+  .lockup { display: flex; align-items: center; gap: 1.1rem; }
+  .wm-text { font-family: var(--mono); letter-spacing: 0.28em; font-size: 1rem; white-space: nowrap; color: var(--ink); }
+  .wm-text b { color: var(--accent); font-weight: 700; }
+  .wm-text.on-dark { color: var(--chalk); }
+  .wm-text.on-dark b { color: var(--gold); }
+
+  .story { max-width: 62ch; display: grid; gap: 1rem; }
+  .story b { color: var(--accent-strong); font-weight: 700; }
+
+  .palette { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1rem; }
+  .chip { border: 1px solid var(--line); }
+  .chip .sw { height: 4.5rem; }
+  .chip .nm { padding: 0.6rem 0.9rem; display: grid; gap: 0.1rem; }
+  .chip .nm b { font-size: 0.9rem; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  thead th { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); font-weight: 400; border-bottom: 1px solid var(--line); }
+  td code { font-family: var(--mono); font-size: 0.8rem; color: var(--accent-strong); }
+  .tablewrap { overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <nav class="nav">
+    <a class="wordmark" href="/"><img src="/logo-mark.svg" width="24" height="24" alt="">Build <b>w/</b> Carlyto</a>
+    <span class="mono">Brand — official marks</span>
+  </nav>
+</header>
+
+<main>
+  <div class="col">
+    <p class="mono" style="margin-bottom:1.25rem;">The identity</p>
+    <h1>The W and the comet. <em>Discipline and trajectory.</em></h1>
+    <p class="lede">The monogram is built from the particle that carries the whole project — “w/”, <i>with</i>. The W stays strictly between its guide lines: the operator, the discipline. The golden comet launches from the very foot of the letter and breaks past the cap line: the trajectory. Its head is an octagon — a cut gem, a bolt head. The builder's comet.</p>
+
+    <section>
+      <div class="shead mono"><span>01</span>Primary marks</div>
+      <div class="grid">
+        <div class="tile">
+          <img src="/logo-mark.svg" width="150" height="150" alt="Primary monogram — ink plaque">
+          <span class="lbl mono">logo-mark.svg — primary</span>
+        </div>
+        <div class="tile dark">
+          <img src="/logo-gold.svg" width="150" height="150" alt="Gold ingot monogram">
+          <span class="lbl mono">logo-gold.svg — ingot, dark grounds &amp; avatars</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shead mono"><span>02</span>Lockups</div>
+      <div class="grid">
+        <div class="tile" style="min-height:9rem;">
+          <div class="lockup">
+            <img src="/logo-mark.svg" width="46" height="46" alt="">
+            <span class="wm-text">BUILD <b>W/</b> CARLYTO</span>
+          </div>
+          <span class="lbl mono">logo.svg — light grounds</span>
+        </div>
+        <div class="tile dark" style="min-height:9rem;">
+          <div class="lockup">
+            <img src="/logo-gold.svg" width="46" height="46" alt="">
+            <span class="wm-text on-dark">BUILD <b>W/</b> CARLYTO</span>
+          </div>
+          <span class="lbl mono">logo-dark.svg — dark grounds</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shead mono"><span>03</span>Construction</div>
+      <div class="story">
+        <p><b>The W</b> — flat-cut apex sitting exactly on the cap line, mitre-sharp spikes below the baseline. Butt-cut terminals, no rounding anywhere: engraved, not printed.</p>
+        <p><b>The comet</b> — a quill-tapered trail that starts as a needle point at the lowest tip of the W's spike, widens as it climbs, and ends in an octagonal head floating above the cap line — the dot of an “i” that left the page. It reads as a ramp-up curve: the builder's trajectory.</p>
+        <p><b>One rule above all</b> — the W never leaves its lines; only the comet does.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="shead mono"><span>04</span>Palette</div>
+      <div class="palette">
+        <div class="chip"><div class="sw" style="background:#14171C;"></div><div class="nm"><b>Ink</b><span class="mono">#14171C</span></div></div>
+        <div class="chip"><div class="sw" style="background:#EFE9DC;"></div><div class="nm"><b>Chalk</b><span class="mono">#EFE9DC</span></div></div>
+        <div class="chip"><div class="sw" style="background:linear-gradient(120deg,#E9C878,#DBA84A 45%,#C08F35 75%,#E3B25B);"></div><div class="nm"><b>Gold</b><span class="mono">#E3B25B · gradient</span></div></div>
+        <div class="chip"><div class="sw" style="background:#B26F1D;"></div><div class="nm"><b>Amber</b><span class="mono">#B26F1D — text accent</span></div></div>
+        <div class="chip"><div class="sw" style="background:#FFFFFF;border-bottom:1px solid var(--line);"></div><div class="nm"><b>Paper</b><span class="mono">#FFFFFF</span></div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shead mono"><span>05</span>Files &amp; usage</div>
+      <div class="tablewrap">
+      <table>
+        <thead><tr><th>File</th><th>Use for</th></tr></thead>
+        <tbody>
+          <tr><td><code><a href="/logo-mark.svg">logo-mark.svg</a></code></td><td>Primary mark — favicon, app icons, watermark, documents.</td></tr>
+          <tr><td><code><a href="/logo-gold.svg">logo-gold.svg</a></code></td><td>Gold ingot — dark grounds, video, the back of the metal cards.</td></tr>
+          <tr><td><code><a href="/logo.svg">logo.svg</a></code> · <code><a href="/logo-dark.svg">logo-dark.svg</a></code></td><td>Full lockups, light / dark.</td></tr>
+          <tr><td><code><a href="/brand/avatar-1024.png">avatar-1024.png</a></code> · <code><a href="/brand/avatar-512.png">512</a></code></td><td>Profile pictures (Discord, Telegram, X) — safe for circular crops.</td></tr>
+          <tr><td><code><a href="/brand/logo-mark-1024.png">logo-mark-1024.png</a></code> · <code><a href="/brand/logo-mark-512.png">512</a></code> · <code><a href="/brand/logo-mark-256.png">256</a></code></td><td>Mark on transparent — stickers, server emoji, overlays.</td></tr>
+          <tr><td><code><a href="/brand/banner-x-1500x500.png">banner-x-1500x500.png</a></code></td><td>X / Twitter profile header.</td></tr>
+          <tr><td><code><a href="/brand/og-1200x630.png">og-1200x630.png</a></code></td><td>Link previews (already wired into the site's meta tags).</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="story" style="margin-top:1.25rem;"><span class="mono">Don'ts —</span> don't tilt, don't recolor, don't round the corners, don't separate the comet from the W, don't put the ink plaque on black without a hairline. Clear space: half the plaque's width on all sides.</p>
+    </section>
+
+  </div>
+</main>
+
+</body>
+</html>
